@@ -41,11 +41,13 @@ public class MainActivity extends AppCompatActivity {
         Button button9 =  findViewById(R.id.button9);
         Button buttonDot = findViewById(R.id.buttonDot);
 
+
         Button buttonEquals =  findViewById(R.id.buttonEquals);
-        Button buttonDivide =  findViewById(R.id.buttonNeg);
+        Button buttonDivide =  findViewById(R.id.buttonDivide);
         Button buttonMultiply = findViewById(R.id.buttonMultiply);
         Button buttonMinus = findViewById(R.id.buttonMinus);
         Button buttonPlus =  findViewById(R.id.buttonPlus);
+
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +114,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button buttonClear = findViewById(R.id.buttonClear);
+
+        buttonClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                result.setText("");
+                operand1 = null;
+            }
+        });
+
     }
 
     @Override
@@ -132,36 +144,38 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void performOperation(Double value, String operation) {
-        if (null == operand1) {
-            operand1 = value;
-        } else {
-            if (pendingOperation.equals("=")) {
-                pendingOperation = operation;
+
+            if (null == operand1) {
+                operand1 = value;
+            } else {
+                if (pendingOperation.equals("=")) {
+                    pendingOperation = operation;
+                }
+                switch (pendingOperation) {
+                    case "=":
+                        operand1 = value;
+                        break;
+                    case "/":
+                        if (value == 0) {
+                            operand1 = 0.0;
+                        } else {
+                            operand1 /= value;
+                        }
+                        break;
+                    case "*":
+                        operand1 *= value;
+                        break;
+                    case "-":
+                        operand1 -= value;
+                        break;
+                    case "+":
+                        operand1 += value;
+                        break;
+                }
             }
-            switch (pendingOperation) {
-                case "=":
-                    operand1 = value;
-                    break;
-                case "/":
-                    if (value == 0) {
-                        operand1 = 0.0;
-                    } else {
-                        operand1 /= value;
-                    }
-                    break;
-                case "*":
-                    operand1 *= value;
-                    break;
-                case "-":
-                    operand1 -= value;
-                    break;
-                case "+":
-                    operand1 += value;
-                    break;
-            }
+
+            result.setText(operand1.toString());
+            newNumber.setText("");
         }
 
-        result.setText(operand1.toString());
-        newNumber.setText("");
-    }
 }
