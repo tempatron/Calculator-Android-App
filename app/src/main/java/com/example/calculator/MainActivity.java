@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button buttonClear = findViewById(R.id.buttonClear);
+              Button buttonClear = findViewById(R.id.buttonClear);
 
         buttonClear.setOnClickListener(new View.OnClickListener() {
             @Override
